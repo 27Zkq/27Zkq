@@ -1,0 +1,407 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNVx0UY86v5NKYHbWOsFkeB"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Q_tmCfoIP_T5",
+        "outputId": "e30e32a8-147f-4ce8-cbe9-27cea63f1637"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Requirement already satisfied: pandas-datareader in /usr/local/lib/python3.9/dist-packages (0.10.0)\n",
+            "Requirement already satisfied: lxml in /usr/local/lib/python3.9/dist-packages (from pandas-datareader) (4.9.2)\n",
+            "Requirement already satisfied: requests>=2.19.0 in /usr/local/lib/python3.9/dist-packages (from pandas-datareader) (2.27.1)\n",
+            "Requirement already satisfied: pandas>=0.23 in /usr/local/lib/python3.9/dist-packages (from pandas-datareader) (1.4.4)\n",
+            "Requirement already satisfied: numpy>=1.18.5 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader) (1.22.4)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader) (2022.7.1)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.1 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader) (2.8.2)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader) (2022.12.7)\n",
+            "Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader) (1.26.15)\n",
+            "Requirement already satisfied: charset-normalizer~=2.0.0 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader) (2.0.12)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader) (3.4)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.9/dist-packages (from python-dateutil>=2.8.1->pandas>=0.23->pandas-datareader) (1.16.0)\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install pandas-datareader"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip3 install git+https://github.com/pydata/pandas-datareader.git\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "jfIQ6c3bQd2z",
+        "outputId": "1440f67c-df3d-4aa7-c06e-a7c6cc5f2d0b"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Collecting git+https://github.com/pydata/pandas-datareader.git\n",
+            "  Cloning https://github.com/pydata/pandas-datareader.git to /tmp/pip-req-build-_4mhym7i\n",
+            "  Running command git clone --filter=blob:none --quiet https://github.com/pydata/pandas-datareader.git /tmp/pip-req-build-_4mhym7i\n",
+            "  Resolved https://github.com/pydata/pandas-datareader.git to commit ab26ad2099d6a7bc79447e71d72cdb93d8299b3c\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: lxml in /usr/local/lib/python3.9/dist-packages (from pandas-datareader==0.11.0.dev0+12.gab26ad2) (4.9.2)\n",
+            "Requirement already satisfied: pandas>=0.23 in /usr/local/lib/python3.9/dist-packages (from pandas-datareader==0.11.0.dev0+12.gab26ad2) (1.4.4)\n",
+            "Requirement already satisfied: requests>=2.19.0 in /usr/local/lib/python3.9/dist-packages (from pandas-datareader==0.11.0.dev0+12.gab26ad2) (2.27.1)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.1 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader==0.11.0.dev0+12.gab26ad2) (2.8.2)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader==0.11.0.dev0+12.gab26ad2) (2022.7.1)\n",
+            "Requirement already satisfied: numpy>=1.18.5 in /usr/local/lib/python3.9/dist-packages (from pandas>=0.23->pandas-datareader==0.11.0.dev0+12.gab26ad2) (1.22.4)\n",
+            "Requirement already satisfied: charset-normalizer~=2.0.0 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader==0.11.0.dev0+12.gab26ad2) (2.0.12)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader==0.11.0.dev0+12.gab26ad2) (3.4)\n",
+            "Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader==0.11.0.dev0+12.gab26ad2) (1.26.15)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.9/dist-packages (from requests>=2.19.0->pandas-datareader==0.11.0.dev0+12.gab26ad2) (2022.12.7)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.9/dist-packages (from python-dateutil>=2.8.1->pandas>=0.23->pandas-datareader==0.11.0.dev0+12.gab26ad2) (1.16.0)\n",
+            "Building wheels for collected packages: pandas-datareader\n",
+            "  Building wheel for pandas-datareader (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for pandas-datareader: filename=pandas_datareader-0.11.0.dev0+12.gab26ad2-py3-none-any.whl size=109745 sha256=bcecb735f5d9b88be3c190dec77955404e3ffaa6063c9005d969d49e7d0adbc5\n",
+            "  Stored in directory: /tmp/pip-ephem-wheel-cache-jhw89r7u/wheels/18/ff/8f/54606005483e63edde2e940e848ee710ddb8adbb2163ae7c63\n",
+            "Successfully built pandas-datareader\n",
+            "Installing collected packages: pandas-datareader\n",
+            "  Attempting uninstall: pandas-datareader\n",
+            "    Found existing installation: pandas-datareader 0.10.0\n",
+            "    Uninstalling pandas-datareader-0.10.0:\n",
+            "      Successfully uninstalled pandas-datareader-0.10.0\n",
+            "Successfully installed pandas-datareader-0.11.0.dev0+12.gab26ad2\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install matplotlib\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RjjXuKzbQsxI",
+        "outputId": "a5d2a070-1bc3-4726-d215-0a5bd9a46656"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Requirement already satisfied: matplotlib in /usr/local/lib/python3.9/dist-packages (3.7.1)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (1.0.7)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (0.11.0)\n",
+            "Requirement already satisfied: numpy>=1.20 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (1.22.4)\n",
+            "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (1.4.4)\n",
+            "Requirement already satisfied: pillow>=6.2.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (8.4.0)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (3.0.9)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (2.8.2)\n",
+            "Requirement already satisfied: importlib-resources>=3.2.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (5.12.0)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (4.39.3)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib) (23.0)\n",
+            "Requirement already satisfied: zipp>=3.1.0 in /usr/local/lib/python3.9/dist-packages (from importlib-resources>=3.2.0->matplotlib) (3.15.0)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.9/dist-packages (from python-dateutil>=2.7->matplotlib) (1.16.0)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install mplfinance \n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ia6xiegQQsqv",
+        "outputId": "9a80856c-5fcd-4eff-dba8-d1ced36621f4"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/\n",
+            "Collecting mplfinance\n",
+            "  Downloading mplfinance-0.12.9b7-py3-none-any.whl (73 kB)\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m73.1/73.1 KB\u001b[0m \u001b[31m2.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hRequirement already satisfied: pandas in /usr/local/lib/python3.9/dist-packages (from mplfinance) (1.4.4)\n",
+            "Requirement already satisfied: matplotlib in /usr/local/lib/python3.9/dist-packages (from mplfinance) (3.7.1)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (0.11.0)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (23.0)\n",
+            "Requirement already satisfied: pillow>=6.2.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (8.4.0)\n",
+            "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (1.4.4)\n",
+            "Requirement already satisfied: importlib-resources>=3.2.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (5.12.0)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (4.39.3)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (1.0.7)\n",
+            "Requirement already satisfied: numpy>=1.20 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (1.22.4)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (2.8.2)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.9/dist-packages (from matplotlib->mplfinance) (3.0.9)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.9/dist-packages (from pandas->mplfinance) (2022.7.1)\n",
+            "Requirement already satisfied: zipp>=3.1.0 in /usr/local/lib/python3.9/dist-packages (from importlib-resources>=3.2.0->matplotlib->mplfinance) (3.15.0)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.9/dist-packages (from python-dateutil>=2.7->matplotlib->mplfinance) (1.16.0)\n",
+            "Installing collected packages: mplfinance\n",
+            "Successfully installed mplfinance-0.12.9b7\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas_datareader as pdr\n",
+        "import pandas_datareader as web\n",
+        "import datetime\n",
+        "import matplotlib.pyplot as plt\n",
+        "import mplfinance as mpf\n",
+        "import pandas as pd\n",
+        "import numpy\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "-ZTJIqD3QfoG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "code = '9984.JP'#ソフトバンクの銘柄\n",
+        "\n",
+        "\n",
+        "#データ読み込みの期間をここで選択\n",
+        "start_date = datetime.datetime(2022,1,1)\n",
+        "end_date = None\n",
+        "\n",
+        "\n",
+        "df = web.DataReader(code,'stooq',start=start_date,end=end_date)\n",
+        "print (df.head()\n",
+        "       )"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ie29Y8vzQfqc",
+        "outputId": "63df2039-6ccb-4846-e581-cd932c7264a6"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "              Open    High     Low   Close      Volume\n",
+            "Date                                                  \n",
+            "2023-04-05  5261.0  5315.0  5193.0  5213.0  10338500.0\n",
+            "2023-04-04  5210.0  5254.0  5168.0  5244.0   8109900.0\n",
+            "2023-04-03  5260.0  5278.0  5194.0  5218.0   9469300.0\n",
+            "2023-03-31  5137.0  5298.0  5111.0  5182.0  17111600.0\n",
+            "2023-03-30  5190.0  5218.0  5035.0  5084.0  13158900.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df = df.sort_index()\n",
+        "mpf.plot(df,type='line',mav=(5,10),volume=True,savefig='9984_JP,png',figratio=(10,5))\n"
+      ],
+      "metadata": {
+        "id": "Y0go00KsQfss"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# MACD\n",
+        "exp12 = df['Close'].ewm(span=12, adjust=False).mean()\n",
+        "exp26 = df['Close'].ewm(span=26, adjust=False).mean()\n",
+        "df['MACD'] = exp12 - exp26\n",
+        "\n",
+        "# シグナル\n",
+        "df['Signal'] = df['MACD'].rolling(window=9).mean()\n",
+        "    \n",
+        "df['Hist'] = df['MACD'] - df['Signal']"
+      ],
+      "metadata": {
+        "id": "ixhfHJ1dRM3S"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# MACDとシグナルのプロット作成\n",
+        "add_plot = [mpf.make_addplot(df['MACD'], color='m', panel=1, secondary_y=False),\n",
+        "    mpf.make_addplot(df['Signal'], color='c', panel=1, secondary_y=False),\n",
+        "    mpf.make_addplot(df['Hist'], type='bar', color='g', panel=1, secondary_y=True)]\n",
+        "\n",
+        "# ろうそく\n",
+        "mpf.plot(df, type='line',\n",
+        "          mav=(5, 25), volume=True, addplot=add_plot, volume_panel=2, savefig='9984_JP.png')\n",
+        "plt.show()\n",
+        "# 終値の差\n",
+        "df_diff = df['Close'].diff()\n",
+        "# 値上がり幅と値下がり幅\n",
+        "df_up, df_down = df_diff.copy(), df_diff.copy()\n",
+        "df_up[df_up < 0] = 0\n",
+        "df_down[df_down > 0] = 0\n",
+        "df_down = df_down * -1\n",
+        "\n",
+        "# 14日間の単純移動平均＿ここは自分で好きな機関選択できる\n",
+        "sim14_up = df_up.rolling(window=14).mean()\n",
+        "sim14_down = df_down.rolling(window=14).mean()\n",
+        "\n",
+        "# RSI\n",
+        "df['RSI'] = sim14_up / (sim14_up + sim14_down) * 100\n",
+        "\n",
+        "# MACDとRSIのプロット作成\n",
+        "add_plot = [mpf.make_addplot(df['MACD'], color='m', panel=1, secondary_y=False),\n",
+        "    mpf.make_addplot(df['Signal'], color='c', panel=1, secondary_y=False),\n",
+        "    mpf.make_addplot(df['Hist'], type='bar', color='g', panel=1, secondary_y=True),\n",
+        "    mpf.make_addplot(df['RSI'], panel=2)]\n",
+        "\n",
+        "# ローソク足チャートを表示\n",
+        "mpf.plot(df, type='line',\n",
+        "    mav=(5, 25), volume=True, addplot=add_plot, volume_panel=3, savefig='9984_JP1.png')\n",
+        "\n",
+        " #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ここまで図表示￥￥￥￥￥￥￥￥￥￥￥￥￥￥"
+      ],
+      "metadata": {
+        "id": "vsjd8HTxRXfQ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#ゴールデンクロスデッドクロス\n",
+        "\n",
+        "\n",
+        "# ヒストグラムと日付\n",
+        "hists = df['Hist']\n",
+        "dates = df.index\n",
+        "\n",
+        "# 日数ループ\n",
+        "for i in range(1, hists.size):\n",
+        "    \n",
+        "    # 2日分取り出し\n",
+        "    h1 = hists.iloc[i-1]\n",
+        "    h2 = hists.iloc[i]\n",
+        "    \n",
+        "# ゴールデンクロス・デッドクロス\n",
+        "    if h1 < 0 < h2:\n",
+        "        # ゴールデンクロス\n",
+        "        print(f'{dates[i]:%Y-%m-%d} {code} ゴールデンクロス {h1:.1f},{h2:.1f}')\n",
+        "        \n",
+        "    elif h1 > 0 > h2:\n",
+        "        # デッドクロス\n",
+        "        print(f'{dates[i]:%Y-%m-%d} {code} デッドクロス {h1:.1f},{h2:.1f}')"
+      ],
+      "metadata": {
+        "id": "GUlst-oppBrh"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#天井と床\n",
+        "\n",
+        "\n",
+        "# ヒストグラムと日付\n",
+        "hists = df['Hist']\n",
+        "dates = df.index\n",
+        "\n",
+        "# 日数ループ\n",
+        "for i in range(0, hists.size-5):\n",
+        "    \n",
+        "    # 5日分取り出し\n",
+        "    h5d = hists.iloc[i:i+5]\n",
+        "    \n",
+        "    # 日毎の差分を取得\n",
+        "    hdiff = h5d.diff()\n",
+        "    \n",
+        "# ボトムアウト・ピークアウトを判定\n",
+        "    if (hdiff[1] < 0) and (hdiff[2] < 0) and \\\n",
+        "        (hdiff[3] > 0) and (hdiff[4] > 0) and \\\n",
+        "        (h5d[2] < 0):\n",
+        "        # ボトムアウト\n",
+        "        hist_values = f'{h5d[0]:.1f},{h5d[1]:.1f},{h5d[2]:.1f},{h5d[3]:.1f},{h5d[4]:.1f}'\n",
+        "        print(f'{dates[i+2]:%Y-%m-%d} {code} ボトムアウト {hist_values}')\n",
+        "        \n",
+        "    elif (hdiff[1] > 0) and (hdiff[2] > 0) and \\\n",
+        "        (hdiff[3] < 0) and (hdiff[4] < 0) and \\\n",
+        "        (h5d[2] > 0):\n",
+        "        # ピークアウト\n",
+        "        hist_values = f'{h5d[0]:.1f},{h5d[1]:.1f},{h5d[2]:.1f},{h5d[3]:.1f},{h5d[4]:.1f}'\n",
+        "        print(f'{dates[i+2]:%Y-%m-%d} {code} ピークアウト {hist_values}')```"
+      ],
+      "metadata": {
+        "id": "PBFVy5J6pIDq"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#買われすぎ、売られすぎ\n",
+        "\n",
+        "\n",
+        "# 日数ループ\n",
+        "for i, rsi in enumerate(df['RSI']): \n",
+        "    if rsi > 70:\n",
+        "        print(f'{df.index[i]} RSI>70% {rsi:.1f}')\n",
+        "    elif rsi < 30:\n",
+        "        print(f'{df.index[i]} RSI<30% {rsi:.1f}')"
+      ],
+      "metadata": {
+        "id": "lSIu24SUpNVs"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
